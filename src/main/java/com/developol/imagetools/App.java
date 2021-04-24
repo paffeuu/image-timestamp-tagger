@@ -20,6 +20,9 @@ public class App
         String dir = args[0];
         File dirFile = new File(dir);
         for (File file : dirFile.listFiles()) {
+            if (file.getName().startsWith("t-")) {
+                continue;
+            }
 
             try {
                 final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(file);
@@ -31,7 +34,9 @@ public class App
                 String timeStamp = timeStamps[0];
                 timeStamp = timeStamp.replace(" ", "_")
                         .replace(":","");
-                String newFileName = timeStamp + "_" + file.getName();
+
+                String prefix = "t";
+                String newFileName = prefix + "-" + timeStamp + "_" + file.getName();
 
                 Path sourcePath = file.toPath();
 
